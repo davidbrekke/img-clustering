@@ -10,10 +10,11 @@ from sklearn.cluster import KMeans, DBSCAN
 def loadImg(filename):
     # read img as rgb matrix
     data = plt.imread(filename)
-    data = data[:, :, :3]
+    img3d = data[:, :, :3]
     # convert 3D matrix into a 2D matrix and return
-    x, y, z = data.shape
-    return data.reshape(x * y, z), data
+    x, y, z = img3d.shape
+    img2d = img3d.reshape(x * y, z)
+    return img2d, img3d
 
 def useKmean(n_clusters, data):
     return KMeans(n_clusters=n_clusters).fit(data)
@@ -24,8 +25,8 @@ def useDbscan(eps, minPts, data):
 # MAIN
 def main():
     # load image data
-    imgFileName = 'arya'
-    imgFileType = 'jpg'
+    imgFileName, imgFileType = 'earth', 'webp'
+
     img2d, img3d = loadImg(f'{imgFileName}.{imgFileType}')
     x, y, z = img3d.shape
 
